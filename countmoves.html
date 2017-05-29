@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+<script type="text/Javascript">
+function countetm() {
+	var rota = document.getElementById("solve").value.toLowerCase();
+	var r = rota.split("r").length - 1;
+	var l = rota.split("l").length - 1;
+	var u = rota.split("u").length - 1;
+	var f = rota.split("f").length - 1;
+	var b = rota.split("b").length - 1;
+	var d = rota.split("d").length - 1;
+	var m = rota.split("m").length - 1;
+	var n = rota.split("n").length - 1;
+	var e = rota.split("e").length - 1;
+	var s = rota.split("s").length - 1;
+	var x = rota.split("x").length - 1;
+	var y = rota.split("y").length - 1;
+	var z = rota.split("z").length - 1;
+	var etm = r + l + u + d + f + b + m + n + e + s + x + y + z;
+	document.getElementById("etm").innerHTML = etm;
+	countstm(etm);
+}
+
+function countstm() {
+	var rota = document.getElementById("solve").value.toLowerCase();
+	var r = rota.split("r").length - 1;
+	var l = rota.split("l").length - 1;
+	var u = rota.split("u").length - 1;
+	var f = rota.split("f").length - 1;
+	var b = rota.split("b").length - 1;
+	var d = rota.split("d").length - 1;
+	var m = rota.split("m").length - 1;
+	var n = rota.split("n").length - 1;
+	var e = rota.split("e").length - 1;
+	var s = rota.split("s").length - 1;
+	var stm = r + l + u + d + f + b + m + n + e + s;
+	document.getElementById("stm").innerHTML = stm;
+	counthtm();
+}
+
+function counthtm() {
+	var rota = document.getElementById("solve").value;
+	var rs = 0;
+	var ls = 0;
+	var us = 0;
+	var fs = 0;
+	var bs = 0;
+	var ds = 0;
+	for (i = 1; i < 10; i++) {
+		rs += (rota.split(i + "R").length - 1) * 1;
+		ls += (rota.split(i + "L").length - 1) * 1;
+		us += (rota.split(i + "U").length - 1) * 1;
+		fs += (rota.split(i + "F").length - 1) * 1;
+		bs += (rota.split(i + "B").length - 1) * 1;
+		ds += (rota.split(i + "D").length - 1) * 1;
+	}
+	rota = rota.toLowerCase();
+	var r = rota.split("r").length - 1 - rs * 1;
+	var l = rota.split("l").length - 1 - ls * 1;
+	var u = rota.split("u").length - 1 - us * 1;
+	var f = rota.split("f").length - 1 - fs * 1;
+	var b = rota.split("b").length - 1 - bs * 1;
+	var d = rota.split("d").length - 1 - ds * 1;
+	var m = rota.split("m").length - 1;
+	var n = rota.split("n").length - 1;
+	var e = rota.split("e").length - 1;
+	var s = rota.split("s").length - 1;
+	var htm = r + l + u + d + f + b + (m + n + e + s + rs + ls + us + fs + bs + ds) * 2;
+	document.getElementById("htm").innerHTML = htm;
+}
+</script>
+</head>
+
+<body onkeyup="countetm()" onload="countetm()">
+	<div class="header">
+		<div class="title">
+			<h1></h1>
+		</div>
+	</div>
+	<div class="content">
+		<span id="stm"></span> STM / 
+					
+		<span id="etm"></span> ETM / 
+					
+		<span id="htm"></span> HTM
+
+					
+		<br/>
+		<textarea id="solve" cols="50" rows="15"></textarea>
+	</div>
+</body>

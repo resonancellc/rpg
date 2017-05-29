@@ -1,0 +1,490 @@
+<script type="text/Javascript">
+var rows = 10;
+
+function replace() {
+	document.getElementById("text").innerHTML = trim(get('s1m')) + " // inspection";
+	var numturns = 0;
+	for (i = 2; i < rows; i++) {
+		numturns += get('s' + i + 'ts') * 1;
+		if (document.getElementById("r" + i).style.display != "none") {
+			document.getElementById("text").innerHTML += "<br/>" + trim(get('s' + i + 'm')) + " // " + get('s' + i + 'n');
+		}
+	}
+
+	function trim(s) {
+		s = s.replace(/(^\s*)|(\s*$)/gi, "");
+		s = s.replace(/[ ]{2,}/gi, " ");
+		s = s.replace(/\n /, "\n");
+		return s;
+	}
+	var titlename = "Roux solve";
+	var str = document.getElementById("text").innerHTML;
+	str = str.replace(/'/g, "-");
+	str = str.replace(/ /g, "_");
+	str = str.replace(/<br>/g, "%0A");
+	var scr = document.getElementById("scr").value;
+	str = str.replace(/'/g, "-");
+	str = str.replace(/ /g, "_");
+	document.getElementById("encode").innerHTML = "http://alg.cubing.net/?alg=" + str + "&setup=" + trim(scr) + "&title=" + titlename;
+	document.getElementById("link").innerHTML = "[color='#696969']View at[/color] [url='http://alg.cubing.net/?alg=" + str + "&title=" + titlename + "&setup=" + trim(scr) + "']<a target='_blank' href='http://alg.cubing.net/?alg=" + str + "&title=" + titlename + "&setup=" + trim(scr) + "'>alg.cubing.net</a>[/url]";
+}
+
+
+
+var xc = 1;
+
+function altstep() {
+	var cmll = document.getElementById("cskip").checked;
+	if (cmll == true) {
+		document.getElementById("r6").style.display = "none";
+		document.getElementById("s6m").value = "";
+		document.getElementById("s6t").value = "0";
+	}
+	if (cmll == false) {
+		document.getElementById("r6").style.display = "";
+	}
+
+	var eo = document.getElementById("eskip").checked;
+	if (eo == true) {
+		document.getElementById("r7").style.display = "none";
+		document.getElementById("s7m").value = "";
+		document.getElementById("s7t").value = "0";
+	}
+	if (eo == false) {
+		document.getElementById("r7").style.display = "";
+	}
+
+	var ulur = document.getElementById("uskip").checked;
+	if (ulur == true) {
+		document.getElementById("r8").style.display = "none";
+		document.getElementById("s8m").value = "";
+		document.getElementById("s8t").value = "0";
+	}
+	if (ulur == false) {
+		document.getElementById("r8").style.display = "";
+	}
+
+	var l4e = document.getElementById("lskip").checked;
+	if (l4e == true) {
+		document.getElementById("r9").style.display = "none";
+		document.getElementById("s9m").value = "";
+		document.getElementById("s9t").value = "0";
+	}
+	if (l4e == false) {
+		document.getElementById("r9").style.display = "";
+	}
+
+	if (eo == false && ulur == false && l4e == false) {
+		document.getElementById("llt2").style.display = "none";
+		document.getElementById("llt3").style.display = "none";
+		document.getElementById("eborder").style.borderBottom = "none";
+		document.getElementById("uborder").style.borderBottom = "none";
+	}
+	if (eo == true && ulur == false && l4e == false) {
+		document.getElementById("llt2").style.display = "";
+		document.getElementById("llt3").style.display = "none";
+		document.getElementById("llt2").rowSpan = "2";
+		document.getElementById("eborder").style.borderBottom = "none";
+		document.getElementById("uborder").style.borderBottom = "none";
+	}
+	if (eo == true && ulur == true && l4e == false) {
+		document.getElementById("llt2").style.display = "none";
+		document.getElementById("llt3").style.display = "";
+		document.getElementById("eborder").style.borderBottom = "none";
+		document.getElementById("uborder").style.borderBottom = "none";
+	}
+	if (eo == true && ulur == true && l4e == true) {
+		document.getElementById("llt2").style.display = "none";
+		document.getElementById("llt3").style.display = "none";
+		document.getElementById("eborder").style.borderBottom = "none";
+		document.getElementById("uborder").style.borderBottom = "none";
+	}
+	if (eo == true && ulur == false && l4e == true) {
+		document.getElementById("llt2").style.display = "";
+		document.getElementById("llt3").style.display = "none";
+		document.getElementById("eborder").style.borderBottom = "none";
+		document.getElementById("uborder").style.borderBottom = "1px solid black";
+	}
+	if (eo == false && ulur == false && l4e == true) {
+		document.getElementById("llt2").style.display = "none";
+		document.getElementById("llt3").style.display = "";
+		document.getElementById("eborder").style.borderBottom = "none";
+		document.getElementById("uborder").style.borderBottom = "1px solid black";
+	}
+	if (eo == false && ulur == true && l4e == true) {
+		document.getElementById("llt2").style.display = "none";
+		document.getElementById("llt3").style.display = "";
+		document.getElementById("eborder").style.borderBottom = "1px solid black";
+		document.getElementById("uborder").style.borderBottom = "none";
+	}
+
+	generate();
+}
+
+function countetm() {
+	for (i = 2; i < rows; i++) {
+		var rota = document.getElementById("s" + i + "m").value.toLowerCase();
+		var r = rota.split("r").length - 1;
+		var l = rota.split("l").length - 1;
+		var u = rota.split("u").length - 1;
+		var f = rota.split("f").length - 1;
+		var b = rota.split("b").length - 1;
+		var d = rota.split("d").length - 1;
+		var m = rota.split("m").length - 1;
+		var n = rota.split("n").length - 1;
+		var e = rota.split("e").length - 1;
+		var s = rota.split("s").length - 1;
+		var x = rota.split("x").length - 1;
+		var y = rota.split("y").length - 1;
+		var z = rota.split("z").length - 1;
+		var etm = r + l + u + d + f + b + m + n + e + s + x + y + z;
+		document.getElementById("s" + i + "te").value = etm;
+	}
+	countstm();
+}
+
+function countstm() {
+	for (i = 2; i < rows; i++) {
+		var rota = document.getElementById("s" + i + "m").value.toLowerCase();
+		var r = rota.split("r").length - 1;
+		var l = rota.split("l").length - 1;
+		var u = rota.split("u").length - 1;
+		var f = rota.split("f").length - 1;
+		var b = rota.split("b").length - 1;
+		var d = rota.split("d").length - 1;
+		var m = rota.split("m").length - 1;
+		var n = rota.split("n").length - 1;
+		var e = rota.split("e").length - 1;
+		var s = rota.split("s").length - 1;
+		if (document.getElementById("hstm").value == "HTM") {
+			var stm = r + l + u + d + f + b + (m + n + e + s) * 2;
+		}
+		if (document.getElementById("hstm").value == "STM") {
+			var stm = r + l + u + d + f + b + m + n + e + s;
+		}
+		document.getElementById("s" + i + "ts").value = stm;
+	}
+}
+
+function get(s2n) {
+	var n = document.getElementById(s2n).value;
+	return n;
+}
+
+function generate() {
+	for (i = 1; i < rows; i++) {
+		document.getElementById("s" + i + "m").value = document.getElementById("s" + i + "m").value.replace(/`/g, "'");
+		document.getElementById("s" + i + "m").value = document.getElementById("s" + i + "m").value.replace(/’/g, "'");
+	}
+	var numturns = 0;
+	var numturnse = 0;
+	var scr = get('scr');
+	var s = "<br/><br/>" + get('s1m') + " <span style='color:#696969'>[color='#696969']// inspection[/color]</span>";
+	for (i = 2; i < rows; i++) {
+		numturns += get('s' + i + 'ts') * 1;
+		numturnse += get('s' + i + 'te') * 1;
+		var stps = Math.round(get('s' + i + 'ts') / get('s' + i + 't') * 100) / 100;
+		var etps = Math.round(get('s' + i + 'te') / get('s' + i + 't') * 100) / 100;
+		var n = document.getElementById("r" + i).style.display;
+		if (n != "none") {
+			s += "<br/>" + get('s' + i + 'm') + " <span style='color:#696969'>[color='#696969']// " + get('s' + i + 'n') + "[/color]</span>";
+		}
+	}
+
+	var lbts = get('s2ts') * 1 + get('s3ts') * 1;
+	var lbte = get('s2te') * 1 + get('s3te') * 1;
+	var lbt = get('s2t') * 1 + get('s3t') * 1;
+	var lbtpss = (Math.round(lbts * 100 / lbt) / 100).toFixed(2);
+	var lbtpse = (Math.round(lbte * 100 / lbt) / 100).toFixed(2);
+
+	var rbts = get('s4ts') * 1 + get('s5ts') * 1;
+	var rbte = get('s4te') * 1 + get('s5te') * 1;
+	var rbt = get('s4t') * 1 + get('s5t') * 1 - lbt;
+	var rbtpss = (Math.round(rbts * 100 / rbt) / 100).toFixed(2);
+	var rbtpse = (Math.round(rbte * 100 / rbt) / 100).toFixed(2);
+
+	var cts = get('s6ts') * 1;
+	var cte = get('s6te') * 1;
+	var ct = get('s6t') * 1 - rbt - lbt;
+	var ctpss = (Math.round(cts * 100 / ct) / 100).toFixed(2);
+	var ctpse = (Math.round(cte * 100 / ct) / 100).toFixed(2);
+
+	var lts = get('s7ts') * 1 + get('s8ts') * 1 + get('s9ts') * 1;
+	var lte = get('s7te') * 1 + get('s8te') * 1 + get('s9te') * 1;
+	var lt = get('s7t') * 1 + get('s8t') * 1 + get('s9t') * 1 - ct - rbt - lbt;
+	var ltpss = (Math.round(lts * 100 / lt) / 100).toFixed(2);
+	var ltpse = (Math.round(lte * 100 / lt) / 100).toFixed(2);
+
+	var lpts = cts + lts;
+	var lpte = cte + lte;
+	var lpt = ct + lt;
+	var lptpss = (Math.round(lpts * 100 / lpt) / 100).toFixed(2);
+	var lptpse = (Math.round(lpte * 100 / lpt) / 100).toFixed(2);
+
+	var totaltime = (lbt + rbt + ct + lt).toFixed(2);
+	var ttpss = (Math.round(numturns * 100 / totaltime) / 100).toFixed(2);
+	var ttpse = (Math.round(numturnse * 100 / totaltime) / 100).toFixed(2);
+
+	if (lbt == 0) {
+		lbtpss = 0;
+		lbtpse = 0;
+		lbts = 0;
+		lbte = 0;
+	}
+	if (rbt == 0) {
+		rbtpss = 0;
+		rbtpse = 0;
+		rbts = 0;
+		rbte = 0;
+	}
+	if (ct == 0) {
+		ctpss = 0;
+		ctpse = 0;
+		cts = 0;
+		cte = 0;
+	}
+	if (lt == 0) {
+		ltpss = 0;
+		ltpse = 0;
+		lts = 0;
+		lte = 0;
+	}
+	if (lpt == 0) {
+		lptpss = 0;
+		lptpse = 0;
+		lpts = 0;
+		lpte = 0;
+	}
+
+	document.getElementById("post").innerHTML = "[spoiler='" + get('sn') + getsuffix(get('sn')) + " solve']" + scr + s;
+
+	document.getElementById("stats").innerHTML = '[code]<style type="text/CSS">td{ width:60px; height:1em; }</style><table style="font-family:monospace;"><tr style="font-weight:bold;"><td>[b]Step</td><td>Time</td><td>' + document.getElementById("hstm").value + '</td><td>' + document.getElementById("hstm").value.substring(0, 1) + 'TPS</td><td>ETM</td><td>ETPS[/b]</td></tr><trstyle="color:red;"><td>[color="red"]Total</td><td>' + (Math.round(totaltime * 100) / 100).toFixed(2) + '</td><td>' + numturns + '</td><td>' + (Math.round(ttpss * 100) / 100).toFixed(2) + '</td><td>' + numturnse + '</td><td>' + (Math.round(ttpse * 100) / 100).toFixed(2) + '[/color]</td></tr></table><br/><table style="font-family:monospace;"><tr><td>Lblock</td><td>' + (Math.round(lbt * 100) / 100).toFixed(2) + '</td><td>' + lbts + '</td><td>' + (Math.round(lbtpss * 100) / 100).toFixed(2) + '</td><td>' + lbte + '</td><td>' + (Math.round(lbtpse * 100) / 100).toFixed(2) + '</td></tr><tr><td>Rblock</td><td>' + (Math.round(rbt * 100) / 100).toFixed(2) + '</td><td>' + rbts + '</td><td>' + (Math.round(rbtpss * 100) / 100).toFixed(2) + '</td><td>' + rbte + '</td><td>' + (Math.round(rbtpse * 100) / 100).toFixed(2) + '</td></tr><tr><td>CMLL</td><td>' + (Math.round(ct * 100) / 100).toFixed(2) + '</td><td>' + cts + '</td><td>' + (Math.round(ctpss * 100) / 100).toFixed(2) + '</td><td>' + cte + '</td><td>' + (Math.round(ctpse * 100) / 100).toFixed(2) + '</td></tr><tr><td>EP</td><td>' + (Math.round(lt * 100) / 100).toFixed(2) + '</td><td>' + lts + '</td><td>' + (Math.round(ltpss * 100) / 100).toFixed(2) + '</td><td>' + lte + '</td><td>' + (Math.round(ltpse * 100) / 100).toFixed(2) + '</td></tr></table>';
+
+	document.getElementById("stats").innerHTML += '<br/><table style="font-family:monospace;"><tr style="font-weight:bold;"><td>[b]Step</td><td></td><td>Time</td><td>' + document.getElementById("hstm").value + '</td><td>ETM[/b]</td></tr><tr><td colspan="2">Lblock/F2B</td><td>' + Math.round(lbt * 100 / (lbt + rbt)) + '%</td><td>' + Math.round(lbts * 100 / (lbts + rbts)) + '%</td><td>' + Math.round(lbte * 100 / (lbte + rbte)) + '%</td></tr><tr><td colspan="2">Rblock/F2B</td><td>' + Math.round(rbt * 100 / (lbt + rbt)) + '%</td><td>' + Math.round(rbts * 100 / (rbts + lbts)) + '%</td><td>' + Math.round(rbte * 100 / (rbte + lbte)) + '%</td></tr><tr><td colspan="2">F2B/Total</td><td>' + Math.round((lbt + rbt) * 100 / totaltime) + '%</td><td>' + Math.round((lbts + rbts) * 100 / numturns) + '%</td><td>' + Math.round((lbte + rbte) * 100 / numturnse) + '%</td></tr></table><br/><table style="font-family:monospace;"><tr><td colspan="2" style="width:120px;">CMLL/L10P</td><td>' + Math.round(ct * 100 / lpt) + '%</td><td>' + Math.round(cts * 100 / lpts) + '%</td><td>' + Math.round(cte * 100 / lpte) + '%</td></tr><tr><td colspan="2">EP/L10P</td><td>' + Math.round(lt * 100 / lpt) + '%</td><td>' + Math.round(lts * 100 / lpts) + '%</td><td>' + Math.round(lte * 100 / lpte) + '%</td></tr><tr><td colspan="2">L10P/Total</td><td>' + Math.round(lpt * 100 / totaltime) + '%</td><td>' + Math.round(lpts * 100 / numturns) + '%</td><td>' + Math.round(lpte * 100 / numturnse) + '%</td></tr></table>[/code][/spoiler]';
+
+	replace();
+}
+
+function getsuffix(number) {
+	var suffix;
+	if (number == 11 || number == 12 || number == 13) {
+		suffix = "th";
+	} else if (number % 10 == 1) {
+		suffix = "st";
+	} else if (number % 10 == 2) {
+		suffix = "nd";
+	} else if (number % 10 == 3) {
+		suffix = "rd";
+	} else {
+		suffix = "th";
+	}
+	return suffix;
+}
+</script>
+
+
+<body onload="countetm();altstep();" onkeyup="countetm();generate();">
+	<table id="table" cellspacing="0" cellpadding="2">
+		<tr>
+			<td colspan="4">
+				<input type="text" id="scr" placeholder="Scramble"/> &nbsp;Solve 
+				<input type="text" id="sn" value="1" size="3"/> &nbsp;
+
+				<select id="hstm" onchange="countstm();generate()">
+					<option value="HTM">HTM</option>
+					<option value="STM" selected>STM</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="3">
+				<input type="checkbox" id="cskip" onclick="altstep()"/>CMLL Skip &nbsp;
+
+				<input type="checkbox" id="eskip" onclick="altstep()"/>EO Skip &nbsp;
+
+				<input type="checkbox" id="uskip" onclick="altstep()"/>UL/UR Skip &nbsp;
+
+				<input type="checkbox" id="lskip" onclick="altstep()"/>EP Skip
+			</td>
+		</tr>
+		<tr>
+			<td>Step Name</td>
+			<td>Moves Made</td>
+			<td style="width:10px;"></td>
+			<td>Time to point</td>
+			<td>
+				<span style="display:none;"># Turns (STM)</span>
+			</td>
+			<td>
+				<span style="display:none;"># Turns (ETM)</span>
+			</td>
+		</tr>
+		<tr id="r1">
+			<td>
+				<input type="text" id="s1n" value="inspection" disabled/>
+			</td>
+			<td>
+				<input type="text" id="s1m"/>
+			</td>
+			<td></td>
+			<td>
+				<input type="text" id="s1t" value="0" disabled hidden/>
+			</td>
+			<td>
+				<input type="text" id="s1ts" value="0" disabled hidden/>
+			</td>
+			<td>
+				<input type="text" id="s1te" value="0" disabled hidden/>
+			</td>
+		</tr>
+		<tr id="r2">
+			<td>
+				<input type="text" id="s2n" value="square" disabled/>
+			</td>
+			<td>
+				<input type="text" id="s2m"/>
+			</td>
+			<td style="width:10px;border-top:1px solid black;border-right:1px solid black;" id="xborder"></td>
+			<td rowspan="2" style="vertical-align:middle;">
+				<input type="text" id="s2t" value="0" hidden disabled size="5"/>
+				<input type="text" id="s3t" value="0" size="5"/>
+			</td>
+			<td>
+				<input type="text" id="s2ts" hidden/>
+			</td>
+			<td>
+				<input type="text" id="s2te" hidden/>
+			</td>
+		</tr>
+		<tr id="r3">
+			<td>
+				<input type="text" id="s3n" value="left block" disabled/>
+			</td>
+			<td>
+				<input type="text" id="s3m"/>
+			</td>
+			<td style="width:10px;border-bottom:1px solid black;border-right:1px solid black;"></td>
+			<td>
+				<input type="text" id="s3ts" hidden/>
+			</td>
+			<td>
+				<input type="text" id="s3te" hidden/>
+			</td>
+		</tr>
+		<tr id="r4">
+			<td>
+				<input type="text" id="s4n" value="square" disabled/>
+			</td>
+			<td>
+				<input type="text" id="s4m"/>
+			</td>
+			<td style="width:10px;border-right:1px solid black;"></td>
+			<td rowspan="2" style="vertical-align:middle;" id="f2">
+				<input type="text" id="s4t" value="0" size="5"/>
+			</td>
+			<td>
+				<input type="text" id="s4ts" hidden/>
+			</td>
+			<td>
+				<input type="text" id="s4te" hidden/>
+			</td>
+		</tr>
+		<tr id="r5">
+			<td>
+				<input type="text" id="s5n" value="right block" disabled/>
+			</td>
+			<td>
+				<input type="text" id="s5m"/>
+			</td>
+			<td style="width:10px;border-bottom:1px solid black;border-right:1px solid black;"></td>
+			<td rowspan="2" id="f3" style="display:hidden;">
+				<input type="text" id="s5t" value="0" hidden size="5"/>
+			</td>
+			<td>
+				<input type="text" id="s5ts" hidden/>
+			</td>
+			<td>
+				<input type="text" id="s5te" hidden/>
+			</td>
+		</tr>
+		<tr id="r6">
+			<td>
+				<input type="text" id="s6n" value="CMLL" disabled/>
+			</td>
+			<td>
+				<input type="text" id="s6m"/>
+			</td>
+			<td style="width:10px;border-bottom:1px solid black;border-right:1px solid black;"></td>
+			<td id="f4" style="display:hidden;">
+				<input type="text" id="s6t" value="0" size="5"/>
+			</td>
+			<td>
+				<input type="text" id="s6ts" hidden/>
+			</td>
+			<td>
+				<input type="text" id="s6te" hidden/>
+			</td>
+		</tr>
+		<tr id="r7">
+			<td>
+				<input type="text" id="s7n" value="EO" disabled/>
+			</td>
+			<td>
+				<input type="text" id="s7m"/>
+			</td>
+			<td style="width:10px;border-right:1px solid black;" id="eborder"></td>
+			<td rowspan="3" style="vertical-align:middle;" id="llt1">
+				<input type="text" id="s7t" value="0" size="5"/>
+			</td>
+			<td>
+				<input type="text" id="s7ts" hidden/>
+			</td>
+			<td>
+				<input type="text" id="s7te" hidden/>
+			</td>
+		</tr>
+		<tr id="r8">
+			<td>
+				<input type="text" id="s8n" value="UL/UR" disabled/>
+			</td>
+			<td>
+				<input type="text" id="s8m"/>
+			</td>
+			<td style="width:10px;border-right:1px solid black;" width="10" id="uborder"></td>
+			<td style="vertical-align:middle; display:none;" id="llt2">
+				<input type="text" id="s8t" value="0" size="5"/>
+			</td>
+			<td>
+				<input type="text" id="s8ts" hidden/>
+			</td>
+			<td>
+				<input type="text" id="s8te" hidden/>
+			</td>
+		</tr>
+		<tr id="r9">
+			<td>
+				<input type="text" id="s9n" value="EP" disabled/>
+			</td>
+			<td>
+				<input type="text" id="s9m"/>
+			</td>
+			<td style="width:10px;border-bottom:1px solid black;border-right:1px solid black;" width="10" id="lborder"></td>
+			<td style="vertical-align:middle; display:none;" id="llt3">
+				<input type="text" id="s9t" value="0" size="5"/>
+			</td>
+			<td>
+				<input type="text" id="s9ts" hidden/>
+			</td>
+			<td>
+				<input type="text" id="s9te" hidden/>
+			</td>
+		</tr>
+	</table>
+	<br/>
+	<div id="post"></div>
+	<div id="link"></div>
+	<br/>
+	<div id="stats"></div>
+	<span id="text" style="display:none;"></span>
+	<span id="encode" style="display:none;"></span>
+</body>
